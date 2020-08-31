@@ -1,0 +1,22 @@
+{
+  "name": "api-exercise-qa",
+  "version": "1.0.0",
+  "description": "Exercise for QA Engineers",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node server.js | bunyan",
+    "copy": "cp -r ./{api.yml,package.json,package-lock.json,.gitignore} build",
+    "minify": "terser server.js --output build/server.js --mangle",
+    "clean": "rm -rf build && mkdir build",
+    "build": "npm run clean && npm run copy  && npm run minify && npm run zip"
+  },
+  "author": "civan",
+  "license": "ISC",
+  "dependencies": {
+    "bunyan-sfdx-no-dtrace": "^1.8.2",
+    "express": "^4.17.1",
+    "express-openapi-validator": "^2.12.2",
+    "passport": "^0.4.0",
+    "passport-http": "^0.3.0"
+  }
+}

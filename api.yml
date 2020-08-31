@@ -1,0 +1,168 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Snappet Pupil API (QA Exercise)
+  description: This API provides basic CRUD operations for a pupil resource. Users must be authorized
+               with basic authentication for all non-read operations.
+paths:
+  /pupils:
+    get:
+      description:
+        Lists all Pupils in the system. Anonymous users may view this path.
+      operationId: getpupils
+      responses:
+        '200':
+          description: Successful response, a list of pupils
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/pupil'
+    post:
+      description: Creates a new pupil. You must be authorized to use this path.
+      operationId: createpupil
+      security:
+        - basicAuth: []
+      requestBody:
+        description: New pupil data; first name, last name gradeId.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/postpupil'
+            example: { "firstName": "Thor", "lastName": "Ra", "gradeId": 8 }
+      responses:
+        '201':
+          description: Provides the newly created pupil resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pupil'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /pupils/{pupilId}:
+    get:
+      description: Find a pupil by their ID. Anonymous users may use this path.
+      operationId: getpupilForId
+      parameters:
+        - name: pupilId
+          in: path
+          description: ID of the pupil to get
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Provides the pupil resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pupil'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      description: Deletes a single pupil based on the given ID. You must be authorized to use this path.
+      operationId: deletePupil
+      security:
+        - basicAuth: []
+      parameters:
+        - name: pupilId
+          in: path
+          description: ID of pupil to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: pupil deleted
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    pupil:
+      type: object
+      properties:
+        pupilId: 
+          type: string
+        firstName: 
+          type: string
+        infix:
+          type: string
+        lastName: 
+          type: string
+        classId:
+          type: integer
+          format: int32
+        gradeId:
+          type: integer
+          format: int32
+        email:
+          type: string
+        isDisabled:
+          type: boolean
+
+    pupilBody:
+      type: object
+      properties:
+        firstName: 
+          type: string
+        infix:
+          type: string
+        lastName: 
+          type: string
+        classId:
+          type: integer
+          format: int32
+        gradeId:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 8
+        email:
+          type: string
+        isDisabled:
+          type: boolean
+      additionalProperties: false
+    
+    postpupil:
+      $ref: '#/components/schemas/pupilBody'
+      required:
+        - firstName
+        - lastName
+
+    Error:
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
