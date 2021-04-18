@@ -14,3 +14,27 @@ The API will be up and running.
 
     `username: testCandidate`  
     `password: P@ssw0rd`
+
+## Modifications Done:
+    1. Refer support/commands.js file for all the common reusable commands which can be used for any kind of API Request.
+    2. Reading test data(request json for post request) from fictures
+    3. Reading username, password from environment variables. Here we are using it from cypress.env.json file.
+
+## Sample Command for get request:
+
+    Cypress.Commands.add("get", (url) => {
+    cy.request({
+        method: "GET",
+        url: url
+    }).then((response) => {
+        expect(response).to.have.property('status', 200);
+    })
+    })
+
+
+This command can be used to make a GET request by directly calling it on cy object like cy.get('/pupils'). This will take care of the initial assertions needed like here it expects it to be 200.
+
+We can add some other methods to which can take input expected result and those can be used for negative test cases.
+
+## Before hooks:
+    This can be done as per need. But here in the test I am using it to read the test data from fixtures and to create sample test data which can be used for other tests

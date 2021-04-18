@@ -18,5 +18,8 @@
     "express-openapi-validator": "^2.12.2",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0"
+  },
+  "devDependencies": {
+    "cypress": "^7.1.0"
   }
 }

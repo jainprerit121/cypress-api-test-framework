@@ -1,0 +1,9 @@
+{
+    "firstName": "Thor",
+    "lastName": "Ra",
+    "gradeId": 81,
+    "email":"fake@domain.com",
+    "isDisabled":false,
+    "classId":88034,
+    "infix":"NewMCUser"
+}
