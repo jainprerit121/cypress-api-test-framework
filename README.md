@@ -15,7 +15,7 @@ The API will be up and running.
     `username: testCandidate`  
     `password: P@ssw0rd`
 
-## Modifications Done:
+## Framework Details:
     1. Refer support/commands.js file for all the common reusable commands which can be used for any kind of API Request.
     2. Reading test data(request json for post request) from fixtures
     3. Reading username, password from environment variables. Here we are using it from cypress.env.json file.
